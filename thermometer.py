@@ -2,6 +2,7 @@ import os
 import glob
 import time
 import MySQLdb
+import threading
 
 # Database connection info
 # Password is needed for it to work
@@ -46,16 +47,20 @@ def read_temp():
 
 def write_to_db():
     #insert to table
+    threading.Timer(600.0, write_to_db).start() # Called every x seconds
     try:
         cursor.execute("""INSERT INTO breweryTemperature(temperature, breweryID) VALUES (%s,%s)""",(read_temp(),breweryID))
         db.commit()
+        
     except:
         db.rollback()
-	
-while True:
+        
+write_to_db()
+"""while True:
         # Print the read temperature to the console
 	print(read_temp())
 	# Insert the read temperature to the database
 	write_to_db()
 	# Pause for 3600 seconds (1 hour) until next reading
 	time.sleep(3600)
+"""
