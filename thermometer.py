@@ -9,12 +9,17 @@ base_dir = '/sys/bus/w1/devices/'
 device_folder = glob.glob(base_dir + '28*')[0]
 device_file = device_folder + '/w1_slave'
 
+# Get the readings
 def read_temp_raw():
     f = open(device_file, 'r')
     lines = f.readlines()
     f.close()
     return lines
 
+"""
+Strip the lines read from read_temp_raw(), look for error
+Get the temperature reading, divide it by 1000 to get Celsius temperature
+"""
 def read_temp():
     lines = read_temp_raw()
     while lines[0].strip()[-3:] != 'YES':
