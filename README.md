@@ -1,5 +1,5 @@
 =======
-# [BrewSource | Backend] (http://brewsource.no) - :snake:Python3
+# [BrewSource | Backend] (http://brewsource.no) - :snake:Python
 Script to read temperature data from a DS18B20 sensor
 
 BrewSource, a Raspberry Pi-powered monitor for your brewing :beers:. Written in :snake:Python and :sailboat:Sails.js
