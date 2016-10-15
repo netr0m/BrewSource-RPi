@@ -1,10 +1,23 @@
 import os
 import glob
 import time
+import MySQLdb
 
+# Database connection info
+# Password is needed for it to work
+# (host, user, password, database)
+db = MySQLdb.connect("46.101.188.26","root","","brewsource")
+# Used to execute commands
+cursor = db.cursor()
+
+# ID of the brewery of which the temperature is associated
+breweryID = 1
+
+# Command run to start reading from the sensor
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
 
+# Directory of the temperature readings
 base_dir = '/sys/bus/w1/devices/'
 device_folder = glob.glob(base_dir + '28*')[0]
 device_file = device_folder + '/w1_slave'
@@ -30,7 +43,19 @@ def read_temp():
         temp_string = lines[1][equals_pos+2:]
         temp_c = float(temp_string) / 1000.0
         return temp_c
+
+def write_to_db():
+    #insert to table
+    try:
+        cursor.execute("""INSERT INTO breweryTemperature(temperature, breweryID) VALUES (%s,%s)""",(read_temp(),breweryID))
+        db.commit()
+    except:
+        db.rollback()
 	
 while True:
-	print(read_temp())	
-	time.sleep(1)
+        # Print the read temperature to the console
+	print(read_temp())
+	# Insert the read temperature to the database
+	write_to_db()
+	# Pause for 3600 seconds (1 hour) until next reading
+	time.sleep(3600)
