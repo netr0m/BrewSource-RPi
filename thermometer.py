@@ -47,7 +47,7 @@ def read_temp():
 
 def write_to_db():
     #insert to table
-    threading.Timer(600.0, write_to_db).start() # Called every x seconds
+    threading.Timer(3600.0, write_to_db).start() # Called every x seconds
     try:
         cursor.execute("""INSERT INTO breweryTemperature(temperature, breweryID) VALUES (%s,%s)""",(read_temp(),breweryID))
         db.commit()

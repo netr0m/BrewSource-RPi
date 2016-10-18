@@ -32,9 +32,7 @@ def start_stream():
         print("Great success")
         print("Your stream is now available at %s:%s" %(ip, port))
         #os.system("raspivid -o - -t 0 -hf -w 800 -h 400 -fps 24 |cvlc -vvv stream:///dev/stdin --sout '#standard{access=http,mux=ts,dst=:8160}' :demux=h264")
-        os.system("""raspivid -o - -t 0 -hf -w %s -h %s -fps %s
-                |cvlc -vvv stream:///dev/stdin --sout '#standard{access=http,mux=ts,dst=:%s}' :demux=h264"""
-                  %(width, height, frames, port))
+        os.system("""raspivid -o - -t 0 -hf -w %s -h %s -fps %s |cvlc -vvv stream:///dev/stdin --sout '#standard{access=http,mux=ts,dst=:%s}' :demux=h264""" %(width, height, frames, port))
     except:
         print("Well, damn...")
         # Exception: Either VLC is missing, or the camera failed to load
