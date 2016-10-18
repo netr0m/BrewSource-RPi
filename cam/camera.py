@@ -40,7 +40,10 @@ def start_stream():
         # Exception: Either VLC is missing, or the camera failed to load
         print("An error has occured. You're either missing VLC, or your camera module is not properly installed/enabled")
         print("Attempting to install VLC")
-        os.system("sudo apt-get install vlc")
+        try:
+            os.system("sudo apt-get install vlc")
+        except:
+            print("VLC appears to be installed. Try rebooting. If the error persists, check your camera module")
 
 # Get the IP-address of the RPi
 def get_ip_address(ifname):
