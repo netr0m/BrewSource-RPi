@@ -3,6 +3,6 @@
 # navigate to home, then to this dir, then execute python script
 
 cd /
-cd home/pi/brewpi
+cd home/pi/brewpi/temp
 sudo python thermometer.py
 cd /
