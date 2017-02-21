@@ -18,3 +18,10 @@ _In order to get this working, you'll need to do the following:_
 sudo crontab -e
 @reboot sh /home/pi/brewpi/launcher.sh >/home/pi/logs/cronlog 2>&1
 ```
+
+**The Python script is dependent on a package called MySQLdb**
+
+_To install this on your Pi, you'll need to run_
+```sh
+sudo apt-get install python-mysqldb
+```
