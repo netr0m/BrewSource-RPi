@@ -1,5 +1,5 @@
 =======
-# [BrewSource | Backend] (http://brewsource.no) - :snake:Python
+# [BrewSource | Backend](http://brewsource.no) - :snake:Python
 Script to read temperature data from a DS18B20 sensor
 
 BrewSource, a Raspberry Pi-powered monitor for your brewing :beers:. Written in :snake:Python and :sailboat:Sails.js
@@ -9,7 +9,7 @@ BrewSource, a Raspberry Pi-powered monitor for your brewing :beers:. Written in 
 This repository is for our group project in the course IS-213, **_Open Source_**
 
 - Developed in Python
-- Using a [DS18B20 Waterproof Digital Temperature Sensor] (https://www.adafruit.com/product/381) to read temperatures
+- Using a [DS18B20 Waterproof Digital Temperature Sensor](https://www.adafruit.com/product/381) to read temperatures
 
 **The launcher.sh script is used to run the python script on reboot**
 
