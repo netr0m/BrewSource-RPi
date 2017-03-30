@@ -1,4 +1,3 @@
-=======
 # [BrewSource | Backend](http://brewsource.no) - :snake:Python
 Script to read temperature data from a DS18B20 sensor
 
