@@ -3,16 +3,20 @@ import glob
 import time
 import MySQLdb
 import threading
+from time import gmtime, strftime
 
 # Database connection info
 # Password is needed for it to work
-# (host, user, password, database)
-db = MySQLdb.connect("46.101.188.26","root","","brewsource")
-# Used to execute commands
+host = "host"
+user = "brewer"
+password = "password"
+table = "brewsource"
+# Establish connection
+db = MySQLdb.connect(host,user,password,table)
 cursor = db.cursor()
 
 # ID of the brewery of which the temperature is associated
-breweryID = 1
+breweryID = 3
 
 # Command run to start reading from the sensor
 os.system('modprobe w1-gpio')
@@ -45,22 +49,23 @@ def read_temp():
         temp_c = float(temp_string) / 1000.0
         return temp_c
 
+def get_datetime():
+    return strftime("%Y-%m-%d %H:%M:%S", gmtime())
+
 def write_to_db():
     #insert to table
-    threading.Timer(3600.0, write_to_db).start() # Called every x seconds
+    threading.Timer(600.0, write_to_db).start() # Called every 600 seconds (10 min)
     try:
-        cursor.execute("""INSERT INTO breweryTemperature(temperature, breweryID) VALUES (%s,%s)""",(read_temp(),breweryID))
+        cursor.execute("""INSERT INTO brewerytemp(temperature, owner, createdAt, updatedAt) VALUES (%s,%s, %s, %s)""",(read_temp(),breweryID, get_datetime(), get_datetime()))
         db.commit()
         
     except:
         db.rollback()
+
+def connect_to_db():
+    # Connect to the database
+    db = MySQLdb.connect(host,user,password,table)
+    # Used to execute commands
+    cursor = db.cursor()
         
 write_to_db()
-"""while True:
-        # Print the read temperature to the console
-	print(read_temp())
-	# Insert the read temperature to the database
-	write_to_db()
-	# Pause for 3600 seconds (1 hour) until next reading
-	time.sleep(3600)
-"""
