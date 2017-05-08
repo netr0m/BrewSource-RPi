@@ -1,3 +1,4 @@
+[![forthebadge](http://forthebadge.com/images/badges/made-with-python.svg)](http://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/gluten-free.svg)](http://forthebadge.com)
 # [BrewSource | Backend](http://brewsource.no) - :snake:Python
 Script to read temperature data from a DS18B20 sensor
 
