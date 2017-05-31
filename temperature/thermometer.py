@@ -14,8 +14,8 @@ password = ""
 database = "brewsource"
 authSrc = "admin"
 
-# ID of the brewery of which the temperature is associated
-batchID = "592c5404f9182cd80c389227"
+# ID of the batch of which the temperature is associated
+batchID = ""
 
 """
 MONGO
