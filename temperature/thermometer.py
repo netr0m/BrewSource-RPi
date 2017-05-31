@@ -1,22 +1,30 @@
 import os
 import glob
 import time
-import MySQLdb
 import threading
 from time import gmtime, strftime
+from pymongo import MongoClient
 
 # Database connection info
 # Password is needed for it to work
-host = "host"
+host = "46.101.188.26"
+port = ""
 user = "brewer"
-password = "password"
-table = "brewsource"
-# Establish connection
-db = MySQLdb.connect(host,user,password,table)
-cursor = db.cursor()
+password = ""
+database = "brewsource"
+authSrc = "admin"
 
 # ID of the brewery of which the temperature is associated
-breweryID = 3
+batchID = "592c5404f9182cd80c389227"
+
+"""
+MONGO
+"""
+# Define the client with user, password, host:port, database and authentication source
+# "mongodb://user:password@HOST:PORT/database?authSource=authenticationDatabase"
+client = MongoClient("mongodb://" + user + ":" + password + "@" + host + ":" + port + "/" + database + "?authSource=" + authSrc + "")
+# set the database to be used
+db = client.brewsource
 
 # Command run to start reading from the sensor
 os.system('modprobe w1-gpio')
@@ -27,7 +35,9 @@ base_dir = '/sys/bus/w1/devices/'
 device_folder = glob.glob(base_dir + '28*')[0]
 device_file = device_folder + '/w1_slave'
 
-# Get the readings
+"""
+Get the temperature readings
+"""
 def read_temp_raw():
     f = open(device_file, 'r')
     lines = f.readlines()
@@ -48,24 +58,41 @@ def read_temp():
         temp_string = lines[1][equals_pos+2:]
         temp_c = float(temp_string) / 1000.0
         return temp_c
-
+"""
+Get the current datetime
+"""
 def get_datetime():
     return strftime("%Y-%m-%d %H:%M:%S", gmtime())
 
+"""
+Write the temperature, owner, dates to the collection (table)
+"""
 def write_to_db():
-    #insert to table
+    # insert into collection
     threading.Timer(600.0, write_to_db).start() # Called every 600 seconds (10 min)
     try:
-        cursor.execute("""INSERT INTO brewerytemp(temperature, owner, createdAt, updatedAt) VALUES (%s,%s, %s, %s)""",(read_temp(),breweryID, get_datetime(), get_datetime()))
-        db.commit()
-        
-    except:
-        db.rollback()
+        db.brewerytemp.insert_one(
+            {
+                "temperature": read_temp(),
+                "owner": batchID,
+                "createdAt": get_datetime(),
+                "updatedAt": get_datetime()
+            }
+        )
+        print 'great success'
 
+    except Exception, e:
+        print str(e)
+
+"""
+Connection to the database
+"""
 def connect_to_db():
-    # Connect to the database
-    db = MySQLdb.connect(host,user,password,table)
-    # Used to execute commands
-    cursor = db.cursor()
-        
+    # Connect to the DB
+    # Define the client with user, password, host:port, database and authentication source
+    client = MongoClient("mongodb://" + user + ":" + password + "@" + host + ":" + port + "/" + database + "?authSource=" + authSrc + "")
+    # set the database to be used
+    db = client.brewsource
+
+# Run the write method
 write_to_db()
