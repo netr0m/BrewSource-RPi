@@ -1,0 +1,9 @@
+language: python
+python:
+  - "3.6"
+  
+# Install dependencies
+install:
+  - pip install pymongo
+# command to run tests
+script: pytest
