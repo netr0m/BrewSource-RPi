@@ -1,4 +1,5 @@
-[![forthebadge](http://forthebadge.com/images/badges/made-with-python.svg)](http://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/gluten-free.svg)](http://forthebadge.com)
+[![forthebadge](http://forthebadge.com/images/badges/made-with-python.svg)](http://forthebadge.com)
+[![forthebadge](http://forthebadge.com/images/badges/gluten-free.svg)](http://forthebadge.com)
 # [BrewSource | Raspberry Pi Project](http://brewsource.no) - :snake:Python
 
 BrewSource is an open source, Raspberry Pi-powered monitor for your beer fermentation :beers:. Written in :snake:Python and :sailboat:Sails.js. We'd love help of any kind, whether you'd like to contribute by submitting a bug, or have a request for a feature. You can also contribute with development, but please read the guidelines on [Contribution](#contribution) before you begin.
@@ -48,9 +49,6 @@ sudo crontab -e
 
 ## Documentation
 https://github.com/mortea15/BrewSource-RPi/wiki
-
-## Features 
-Coming soon
 
 ## Contribution
 We would love your help in the development of BrewSource. Please follow our guidelines on [Contribution](#contribution) on how to report bugs and request features you'd like to see, in addition to how you can contribute with development.
